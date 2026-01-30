@@ -177,11 +177,10 @@ def claim(task_id: str, force: bool):
     task.claimed_by = agent.name
     task.branch = branch_name
 
-    # Stage and commit registry change
+    # Save registry, then stage and commit
+    registry.save(repo_root)
     stage_file("gastown.yaml", repo_root)
     commit(f"[gastown] Claim task: {task_id}", repo_root)
-
-    registry.save(repo_root)
 
     click.echo(f"Claimed task '{task_id}'")
     click.echo(f"Created branch: {branch_name}")
