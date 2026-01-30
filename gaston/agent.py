@@ -15,8 +15,8 @@ class AgentConfig:
 
     @classmethod
     def config_dir(cls) -> Path:
-        """Get the gastown config directory."""
-        return Path.home() / ".gastown"
+        """Get the gaston config directory."""
+        return Path.home() / ".gaston"
 
     @classmethod
     def config_path(cls) -> Path:
@@ -49,7 +49,7 @@ class AgentConfig:
         config = cls.load()
         if config is None:
             raise RuntimeError(
-                "Agent not initialized. Run 'gastown init <name>' first."
+                "Agent not initialized. Run 'gaston init <name>' first."
             )
         return config
 

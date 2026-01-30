@@ -142,14 +142,6 @@ class PRInfo:
 
 def create_pr(title: str, body: str, base: str, cwd: Optional[Path] = None) -> PRInfo:
     """Create a pull request using gh CLI."""
-    result = run_git(
-        "gh", "pr", "create",
-        "--title", title,
-        "--body", body,
-        "--base", base,
-    )
-    # This is actually gh, not git - we'll handle this differently
-    # For now, let's use subprocess directly
     proc = subprocess.run(
         ["gh", "pr", "create", "--title", title, "--body", body, "--base", base],
         cwd=cwd,

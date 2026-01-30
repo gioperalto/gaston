@@ -1,4 +1,4 @@
-"""Task registry management (gastown.yaml)."""
+"""Task registry management (gaston.yaml)."""
 
 from dataclasses import dataclass, field
 from enum import Enum
@@ -67,16 +67,16 @@ class Registry:
 
     @classmethod
     def registry_path(cls, repo_root: Path) -> Path:
-        """Get the path to gastown.yaml."""
-        return repo_root / "gastown.yaml"
+        """Get the path to gaston.yaml."""
+        return repo_root / "gaston.yaml"
 
     @classmethod
     def load(cls, repo_root: Path) -> "Registry":
-        """Load the registry from gastown.yaml."""
+        """Load the registry from gaston.yaml."""
         path = cls.registry_path(repo_root)
         if not path.exists():
             raise FileNotFoundError(
-                f"No gastown.yaml found at {path}. "
+                f"No gaston.yaml found at {path}. "
                 "Create one to define tasks for this project."
             )
 
@@ -89,7 +89,7 @@ class Registry:
         )
 
     def save(self, repo_root: Path) -> None:
-        """Save the registry to gastown.yaml."""
+        """Save the registry to gaston.yaml."""
         path = self.registry_path(repo_root)
 
         data = {

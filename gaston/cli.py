@@ -1,4 +1,4 @@
-"""Gastown CLI - Multi-agent collaborative development."""
+"""Gaston CLI - Multi-agent collaborative development."""
 
 import sys
 from pathlib import Path
@@ -51,7 +51,7 @@ def get_context() -> tuple[Path, Registry]:
 @click.group()
 @click.version_option()
 def cli():
-    """Gastown: Multi-agent collaborative development system.
+    """Gaston: Multi-agent collaborative development system.
 
     Coordinate multiple agents working on a shared codebase using git.
     """
@@ -66,7 +66,7 @@ def init(name: str):
     The agent name is used to identify your work in the task registry
     and for branch naming.
 
-    Example: gastown init alpha
+    Example: gaston init alpha
     """
     config = AgentConfig(name=name)
     config.save()
@@ -117,7 +117,7 @@ def claim(task_id: str, force: bool):
     This marks the task as claimed by you and creates a new branch
     for your work.
 
-    Example: gastown claim implement-auth
+    Example: gaston claim implement-auth
     """
     agent = AgentConfig.require()
     repo_root, registry = get_context()
@@ -179,15 +179,15 @@ def claim(task_id: str, force: bool):
 
     # Save registry, then stage and commit
     registry.save(repo_root)
-    stage_file("gastown.yaml", repo_root)
-    commit(f"[gastown] Claim task: {task_id}", repo_root)
+    stage_file("gaston.yaml", repo_root)
+    commit(f"[gaston] Claim task: {task_id}", repo_root)
 
     click.echo(f"Claimed task '{task_id}'")
     click.echo(f"Created branch: {branch_name}")
     click.echo("\nNext steps:")
     click.echo("  1. Make your changes")
     click.echo("  2. Commit your work")
-    click.echo("  3. Run 'gastown submit' to create a PR")
+    click.echo("  3. Run 'gaston submit' to create a PR")
 
 
 @cli.command()
@@ -289,7 +289,7 @@ def submit(title: str, body: str):
         fetch(repo_root)
         if not is_rebased(f"origin/{default_branch}", repo_root):
             click.echo("Error: Branch is not rebased onto latest main.", err=True)
-            click.echo("Run 'gastown sync' first.", err=True)
+            click.echo("Run 'gaston sync' first.", err=True)
             sys.exit(1)
 
     # Push branch
@@ -327,8 +327,8 @@ Submitted by agent: {agent.name}
     registry.save(repo_root)
 
     # Commit registry update
-    stage_file("gastown.yaml", repo_root)
-    commit(f"[gastown] Submit task for review: {task.id}", repo_root)
+    stage_file("gaston.yaml", repo_root)
+    commit(f"[gaston] Submit task for review: {task.id}", repo_root)
     push(current_branch, cwd=repo_root)
 
     click.echo(f"\nTask '{task.id}' is now awaiting review.")
@@ -410,7 +410,7 @@ def approve(task_id: str):
         click.echo("Approval will be recorded in registry.")
 
     click.echo(f"\nTask '{task_id}' approved by {agent.name}.")
-    click.echo(f"The author ({task.claimed_by}) can now merge with 'gastown merge {task_id}'.")
+    click.echo(f"The author ({task.claimed_by}) can now merge with 'gaston merge {task_id}'.")
 
 
 @cli.command("merge")
@@ -459,8 +459,8 @@ def merge_task(task_id: str):
     pull(repo_root)
 
     # Registry should be updated - save and commit
-    stage_file("gastown.yaml", repo_root)
-    commit(f"[gastown] Mark task as merged: {task_id}", repo_root)
+    stage_file("gaston.yaml", repo_root)
+    commit(f"[gaston] Mark task as merged: {task_id}", repo_root)
     push(default_branch, cwd=repo_root)
 
     click.echo(f"\nTask '{task_id}' has been merged!")
@@ -474,7 +474,7 @@ def merge_task(task_id: str):
 def new_task(task_id: str, description: str, files: tuple, depends: tuple):
     """Add a new task to the registry.
 
-    Example: gastown new-task auth "Implement user authentication" -f src/auth/ -f src/models/user.py
+    Example: gaston new-task auth "Implement user authentication" -f src/auth/ -f src/models/user.py
     """
     repo_root, registry = get_context()
 
@@ -505,9 +505,9 @@ def new_task(task_id: str, description: str, files: tuple, depends: tuple):
 @cli.command("create-registry")
 @click.argument("goal")
 def create_registry(goal: str):
-    """Create a new gastown.yaml registry.
+    """Create a new gaston.yaml registry.
 
-    Example: gastown create-registry "Build a REST API for user management"
+    Example: gaston create-registry "Build a REST API for user management"
     """
     try:
         repo_root = get_repo_root()
@@ -525,7 +525,7 @@ def create_registry(goal: str):
 
     click.echo(f"Created {registry_path}")
     click.echo(f"Goal: {goal}")
-    click.echo("\nAdd tasks with: gastown new-task <id> <description>")
+    click.echo("\nAdd tasks with: gaston new-task <id> <description>")
 
 
 if __name__ == "__main__":
