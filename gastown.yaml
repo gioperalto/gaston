@@ -1,0 +1,15 @@
+goal: Build a file encryption CLI tool
+tasks:
+- id: encrypt-core
+  description: Implement AES encryption/decryption functions
+  status: pending
+  files:
+  - pkg/crypto/
+- id: cli-interface
+  description: Build CLI with encrypt/decrypt commands
+  status: pending
+  files:
+  - cmd/
+  - main.py
+  depends_on:
+  - encrypt-core
